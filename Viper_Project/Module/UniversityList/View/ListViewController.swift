@@ -10,7 +10,7 @@ import UIKit
 protocol ListViewProtocol: AnyObject {
     func prepareUI()
     func showItems(_ items: [UniversityEntity])
-    func showError(_ error: Error)
+    func showError(_ error: ApiError)
 }
 
 class ListViewController: UIViewController, ListViewProtocol {
@@ -38,15 +38,22 @@ class ListViewController: UIViewController, ListViewProtocol {
         tableView.reloadData()
     }
     
-    func showError(_ error: any Error) {
-        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+    func showError(_ error: ApiError) {
+        let okAction = UIAlertAction(title: "OK",
+                                     style: .default) { _ in
             print("OK button tapped")
+        }
+        
+        let retryAction = UIAlertAction(title: "Retry",
+                                        style: .default) { [weak self] _ in
+            print("retry button tapped")
+            self?.presenter?.fetchItems(keyword: "United Arab Emirates")
         }
 
         UIAlertController.showAlert(title: "Alert",
                                     message: error.localizedDescription,
                                     controller: self,
-                                    actions: [okAction]) {
+                                    actions: [okAction, retryAction]) {
             print("Alert dismissed")
         }
     }

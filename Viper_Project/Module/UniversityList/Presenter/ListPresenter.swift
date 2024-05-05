@@ -16,7 +16,7 @@ protocol ListPresenterProtocol: AnyObject {
     func fetchItems(keyword: String)
     func viewDidLoad()
     func itemsFetched(_ items: [UniversityEntity])
-    func itemsFetchFailed(withError error: Error)
+    func itemsFetchFailed(withError error: ApiError)
     func itemsSelected(item: UniversityEntity, from view: UIViewController)
 }
 
@@ -38,7 +38,7 @@ class ListPresenter: ListPresenterProtocol {
         view?.showItems(items)
     }
     
-    func itemsFetchFailed(withError error: Error) {
+    func itemsFetchFailed(withError error: ApiError) {
         view?.showError(error)
     }
     

@@ -11,7 +11,7 @@ import Foundation
 class ResourceLoader {
     
     enum Search: String {
-        case swift = "MockAPIResponse"
+        case mockSearch = "MockAPIResponse"
     }
     
     

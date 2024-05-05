@@ -58,9 +58,13 @@ class ListInteractor: ListInteractorProtocol {
            do {
                let realm = try Realm()
                let items = realm.objects(UniversityEntity.self)
-               presenter?.itemsFetched(Array(items))
+               if items.count > 0 {
+                   presenter?.itemsFetched(Array(items))
+               } else {
+                   presenter?.itemsFetchFailed(withError: ApiError.network(errorMessage: "No data found"))
+               }
            } catch {
-               presenter?.itemsFetchFailed(withError: error)
+               presenter?.itemsFetchFailed(withError: .network(errorMessage: error.localizedDescription))
            }
        }
        
